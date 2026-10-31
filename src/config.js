@@ -1,8 +1,7 @@
 // config.js
 
-// Using relative path for API_URL so requests go through the Vercel proxy, 
-// bypassing mobile browser cross-site cookie restrictions (Safari / Brave).
-export const API_URL = '';
+// Backend URL hardcoded to your Render deployment
+export const API_URL = 'https://portfolio-backend-l7j1.onrender.com';
 
 // Secret admin dashboard path
 export const ADMIN_PATH = (import.meta.env.VITE_ADMIN_PATH || 'admin').replace(/^\/+|\/+$/g, '');
