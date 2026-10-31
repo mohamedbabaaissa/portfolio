@@ -1,7 +1,7 @@
+// config.js
 
-// Backend URL
-// Empty during local development; use the Render URL in production.
-export const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+// Backend URL hardcoded to your Render deployment
+export const API_URL = 'https://portfolio-backend-l7j1.onrender.com';
 
 // Secret admin dashboard path
 export const ADMIN_PATH = (import.meta.env.VITE_ADMIN_PATH || 'admin').replace(/^\/+|\/+$/g, '');
