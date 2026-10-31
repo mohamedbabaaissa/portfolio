@@ -19,5 +19,5 @@ export const SKILLS = [
 export const COPY = {
   fallbackBio:
     'Write two or three sentences about yourself here: what you build, the tools you like, and the kind of work you are looking for.',
-  workIntro: 'Things I have built recently.',
+  workIntro: '',
 };
