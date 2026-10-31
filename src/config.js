@@ -1,7 +1,8 @@
 // config.js
 
-// Backend URL hardcoded to your Render deployment
-export const API_URL = 'https://portfolio-backend-l7j1.onrender.com';
+// Using relative path for API_URL so requests go through the Vercel proxy, 
+// bypassing mobile browser cross-site cookie restrictions (Safari / Brave).
+export const API_URL = '';
 
 // Secret admin dashboard path
 export const ADMIN_PATH = (import.meta.env.VITE_ADMIN_PATH || 'admin').replace(/^\/+|\/+$/g, '');
@@ -9,11 +10,9 @@ export const ADMIN_BASE = `/${ADMIN_PATH}`;
 
 // Skills displayed on the website
 export const SKILLS = [
-  'Digital Marketing',
   'JavaScript',
-  'SEO',
   'Node.js',
-  'Social Media',
+  'React',
   'API'
 ];
 
