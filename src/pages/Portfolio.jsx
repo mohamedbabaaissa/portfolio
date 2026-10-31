@@ -160,32 +160,42 @@ export default function Portfolio() {
           <p className="work-empty">Projects will show up here soon.</p>
         ) : (
           <div className="work-grid">
-            {projects.map((p, i) => (
-              <article className="proj-card reveal" key={p.id} style={{ '--d': `${Math.min(i, 5) * 70}ms` }}>
-                <div className="card-media">
-                  {p.image ? <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" /> : <span>Project image</span>}
-                </div>
-                <div className="card-body">
-                  <h3>{p.title}</h3>
-                  {p.description && <p>{p.description}</p>}
-                  {p.tags.length > 0 && (
-                    <ul className="tags">
-                      {p.tags.map((tag) => (
-                        <li className="tag" key={tag}>
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {p.link && (
-                    <a className="card-link" href={p.link} target="_blank" rel="noopener noreferrer">
-                      View project
-                      <FontAwesomeIcon icon={faArrowRight} />
-                    </a>
-                  )}
-                </div>
-              </article>
-            ))}
+            {projects.map((p, i) => {
+              const TagName = p.link ? 'a' : 'div';
+              const linkProps = p.link ? { href: p.link, target: '_blank', rel: 'noopener noreferrer' } : {};
+
+              return (
+                <TagName
+                  className="proj-card reveal"
+                  key={p.id}
+                  style={{ '--d': `${Math.min(i, 5) * 70}ms`, textDecoration: 'none', color: 'inherit', display: 'block', cursor: p.link ? 'pointer' : 'default' }}
+                  {...linkProps}
+                >
+                  <div className="card-media">
+                    {p.image ? <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" /> : <span>Project image</span>}
+                  </div>
+                  <div className="card-body">
+                    <h3>{p.title}</h3>
+                    {p.description && <p>{p.description}</p>}
+                    {p.tags.length > 0 && (
+                      <ul className="tags">
+                        {p.tags.map((tag) => (
+                          <li className="tag" key={tag}>
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {p.link && (
+                      <span className="card-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                        View project
+                        <FontAwesomeIcon icon={faArrowRight} />
+                      </span>
+                    )}
+                  </div>
+                </TagName>
+              );
+            })}
           </div>
         )}
       </section>
