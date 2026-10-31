@@ -7,13 +7,21 @@ const fixProfile = (p) => ({ ...p, photo: asset(p.photo) });
 const fixData = (d) => ({ profile: fixProfile(d.profile), projects: d.projects.map(fixProject) });
 
 async function request(path, options = {}) {
-  const method = options.method || 'GET';
+  const method = (options.method || 'GET').toUpperCase();
+  
+  // Properly merge headers so Content-Type and X-Requested-With don't overwrite each other
+  const headers = {
+    ...(method !== 'GET' ? { 'X-Requested-With': 'portfolio' } : {}),
+    ...(options.headers || {}),
+  };
+
   const res = await fetch(`${API_URL}${path}`, {
     credentials: 'include', // send the login cookie, also when the backend is on another address
     ...options,
-    // This header is required by the backend for every change, which blocks requests coming from other websites.
-    headers: { ...(method !== 'GET' ? { 'X-Requested-With': 'portfolio' } : {}), ...options.headers },
+    method,
+    headers,
   });
+
   let data = null;
   try {
     data = await res.json();
