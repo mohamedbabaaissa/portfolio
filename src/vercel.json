@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://portfolio-backend-l7j1.onrender.com/api/:path*"
-    }
-  ]
-}
