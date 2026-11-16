@@ -1,9 +1,15 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faCube, faDiamond, faDollarSign, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useRef, useState } from 'react';
-import { api } from '../api';
-import { COPY, SKILLS } from '../config';
-import { useReveal, useScrolled } from '../motion';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faCube,
+  faDiamond,
+  faDollarSign,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useRef, useState } from "react";
+import { api } from "../api";
+import { COPY, SKILLS } from "../config";
+import { useReveal, useScrolled } from "../motion";
 
 function Coin({ className }) {
   return (
@@ -30,23 +36,23 @@ function Silhouette() {
 function setMeta(attr, key, content) {
   let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
   if (!tag) {
-    tag = document.createElement('meta');
+    tag = document.createElement("meta");
     tag.setAttribute(attr, key);
     document.head.appendChild(tag);
   }
-  tag.setAttribute('content', content);
+  tag.setAttribute("content", content);
 }
 
 export default function Portfolio() {
-  const [state, setState] = useState({ status: 'loading' });
+  const [state, setState] = useState({ status: "loading" });
   const rootRef = useRef(null);
   const scrolled = useScrolled();
 
   useEffect(() => {
     api
       .public()
-      .then((data) => setState({ status: 'ready', ...data }))
-      .catch(() => setState({ status: 'error' }));
+      .then((data) => setState({ status: "ready", ...data }))
+      .catch(() => setState({ status: "error" }));
   }, []);
 
   // Title and description shown in Google results and when the link is shared.
@@ -54,29 +60,38 @@ export default function Portfolio() {
     const p = state.profile;
     if (!p?.name) return;
     const title = p.title ? `${p.name} | ${p.title}` : `${p.name} | Portfolio`;
-    const description = (p.bio || `${p.name}'s portfolio: projects, skills and contact.`).slice(0, 160);
+    const description = (
+      p.bio || `${p.name}'s portfolio: projects, skills and contact.`
+    ).slice(0, 160);
     document.title = title;
-    setMeta('name', 'description', description);
-    setMeta('property', 'og:title', title);
-    setMeta('property', 'og:description', description);
+    setMeta("name", "description", description);
+    setMeta("property", "og:title", title);
+    setMeta("property", "og:description", description);
   }, [state.profile]);
 
   // Hooks must run before any early return.
   useReveal(rootRef, [state.status, state.projects?.length]);
 
-  if (state.status === 'loading') return <div className="pub pub-status">Loading…</div>;
-  if (state.status === 'error') {
-    return <div className="pub pub-status">The site could not load. Refresh the page to try again.</div>;
+  if (state.status === "loading")
+    return <div className="pub pub-status">Loading…</div>;
+  if (state.status === "error") {
+    return (
+      <div className="pub pub-status">
+        The site could not load. Refresh the page to try again.
+      </div>
+    );
   }
 
   const { profile, projects } = state;
   const skills = [profile.title, ...SKILLS].filter(
-    (word, i, all) => word && all.findIndex((w) => w.toLowerCase() === word.toLowerCase()) === i
+    (word, i, all) =>
+      word &&
+      all.findIndex((w) => w.toLowerCase() === word.toLowerCase()) === i,
   );
 
   return (
     <div className="pub" id="top" ref={rootRef}>
-      <header className={`pub-bar${scrolled ? ' scrolled' : ''}`}>
+      <header className={`pub-bar${scrolled ? " scrolled" : ""}`}>
         <div className="wrap pub-nav">
           <a className="pub-brand" href="#top">
             <span className="pub-brand-mark" />
@@ -97,12 +112,14 @@ export default function Portfolio() {
         <div className="wrap hero-grid">
           <div className="hero-copy">
             <p className="hero-eyebrow reveal">Welcome to my portfolio</p>
-            <h1 className="reveal" style={{ '--d': '80ms' }}>
+            <h1 className="reveal" style={{ "--d": "80ms" }}>
               Hi, I&apos;m
               <span className="outline">{profile.name}</span>
             </h1>
-            <p className="hero-bio reveal" style={{ '--d': '160ms' }}>{profile.bio || COPY.fallbackBio}</p>
-            <div className="hero-actions reveal" style={{ '--d': '240ms' }}>
+            <p className="hero-bio reveal" style={{ "--d": "160ms" }}>
+              {profile.bio || COPY.fallbackBio}
+            </p>
+            <div className="hero-actions reveal" style={{ "--d": "240ms" }}>
               <a className="btn-dark" href="#work">
                 View my work
                 <FontAwesomeIcon icon={faArrowRight} />
@@ -113,9 +130,15 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="hero-visual reveal" style={{ '--d': '120ms' }}>
-            <div className={`hero-card${profile.photo ? ' has-photo' : ''}`}>
-              {profile.photo && <img className="hero-photo" src={profile.photo} alt={profile.name} />}
+          <div className="hero-visual reveal" style={{ "--d": "120ms" }}>
+            <div className={`hero-card${profile.photo ? " has-photo" : ""}`}>
+              {profile.photo && (
+                <img
+                  className="hero-photo"
+                  src={profile.photo}
+                  alt={profile.name}
+                />
+              )}
             </div>
             {!profile.photo && (
               <div className="hero-figure">
@@ -124,8 +147,16 @@ export default function Portfolio() {
             )}
             <Coin className="coin-dark" />
             <Coin className="coin-light" />
-            <FontAwesomeIcon className="deco-cube" icon={faCube} aria-hidden="true" />
-            <FontAwesomeIcon className="deco-plus" icon={faPlus} aria-hidden="true" />
+            <FontAwesomeIcon
+              className="deco-cube"
+              icon={faCube}
+              aria-hidden="true"
+            />
+            <FontAwesomeIcon
+              className="deco-plus"
+              icon={faPlus}
+              aria-hidden="true"
+            />
             <span className="deco-star" aria-hidden="true" />
           </div>
         </div>
@@ -161,18 +192,34 @@ export default function Portfolio() {
         ) : (
           <div className="work-grid">
             {projects.map((p, i) => {
-              const TagName = p.link ? 'a' : 'div';
-              const linkProps = p.link ? { href: p.link, target: '_blank', rel: 'noopener noreferrer' } : {};
+              const TagName = p.link ? "a" : "div";
+              const linkProps = p.link
+                ? { href: p.link, target: "_blank", rel: "noopener noreferrer" }
+                : {};
 
               return (
                 <TagName
                   className="proj-card reveal"
                   key={p.id}
-                  style={{ '--d': `${Math.min(i, 5) * 70}ms`, textDecoration: 'none', color: 'inherit', display: 'block', cursor: p.link ? 'pointer' : 'default' }}
+                  style={{
+                    "--d": `${Math.min(i, 5) * 70}ms`,
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: "block",
+                    cursor: p.link ? "pointer" : "default",
+                  }}
                   {...linkProps}
                 >
                   <div className="card-media">
-                    {p.image ? <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" /> : <span>Project image</span>}
+                    {p.image ? (
+                      <img
+                        src={p.image}
+                        alt={`${p.title} screenshot`}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span>Project image</span>
+                    )}
                   </div>
                   <div className="card-body">
                     <h3>{p.title}</h3>
@@ -187,7 +234,14 @@ export default function Portfolio() {
                       </ul>
                     )}
                     {p.link && (
-                      <span className="card-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                      <span
+                        className="card-link"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
                         View project
                         <FontAwesomeIcon icon={faArrowRight} />
                       </span>
@@ -212,12 +266,22 @@ export default function Portfolio() {
           {(profile.github || profile.linkedin) && (
             <div className="contact-links">
               {profile.github && (
-                <a className="btn-ghost" href={profile.github} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="btn-ghost"
+                  href={profile.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   GitHub
                 </a>
               )}
               {profile.linkedin && (
-                <a className="btn-ghost" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="btn-ghost"
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   LinkedIn
                 </a>
               )}

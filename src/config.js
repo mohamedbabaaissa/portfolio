@@ -12,6 +12,10 @@ export const SKILLS = [
   'JavaScript',
   'Node.js',
   'React',
+  'HTML',
+  'CSS',
+  'Next.js',
+  'SQL',
   'API'
 ];
 
